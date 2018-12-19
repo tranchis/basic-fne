@@ -19,8 +19,9 @@ def full_network_embedding(model, image_paths, input_tensor, target_tensors, sta
     [1] https://arxiv.org/abs/1705.07706
    
     Args:
-        #TODO: is this type (tf model) the correct nomenclature?
-        model (tf model) : Pre-trained with loaded graph to use to extract the FNE.
+        model (tf.GraphDef): Serialized TensorFlow protocol buffer (GraphDef) containing the pre-trained model graph
+                             from where to extract the FNE. You can get corresponding tf.GraphDef from default Graph
+                             using `tf.Graph.as_graph_def`.
         image_paths (list(str)): List of images to generate the FNE for.
         input_tensor (str): Name of tensor from model where the input is fed to
         target_tensors (list(str)): List of tensor names from model to extract features from.
@@ -34,14 +35,13 @@ def full_network_embedding(model, image_paths, input_tensor, target_tensors, sta
     # TODO: Check that this is not problematic. `tf.reset_default_graph` is a global tensorflow call
     #  that might have serious implications on the code using this function...
     tf.reset_default_graph()
-    tf.import_graph_def(model.graph_def)
+    tf.import_graph_def(model)
 
     # Prepare output variable
     len_features = 0
     for tensor_name in target_tensors:
         t_tensor = tf.get_default_graph().get_tensor_by_name(tensor_name)
         len_features += t_tensor.get_shape().as_list()[-1]
-    print(len_features)
     features = np.empty((len(image_paths), len_features))
     # Prepare tensors to capture
     x0 = tf.get_default_graph().get_tensor_by_name(input_tensor)
@@ -60,6 +60,8 @@ def full_network_embedding(model, image_paths, input_tensor, target_tensors, sta
             # TODO: extract by batches for minimal efficiency?
             feature_vals = sess.run(tensorOutputs, feed_dict={x0: np.expand_dims(img, 0)})
             features_current = np.empty((1, 0))
+            # TODO: Since we are already using tensorflow, this must be included as graph operations instead of
+            #  post python computation.
             for feat in feature_vals:
                 # SPATIAL AVERAGE POOLING
                 pooled_vals = np.mean(np.mean(feat, axis=2), axis=1)
@@ -118,4 +120,4 @@ if __name__ == '__main__':
     image_paths = ['../images/img1.jpg', '../images/img2.jpg', '../images/img3.jpg']
 
     # Call FNE method
-    fne_features, fne_stats = full_network_embedding(model, image_paths, input_tensor, target_tensors)
+    fne_features, fne_stats = full_network_embedding(model.graph_def, image_paths, input_tensor, target_tensors)
