@@ -16,6 +16,10 @@ def full_network_embedding(model, image_paths, input_tensor, target_tensors, sta
     dataset we wish to compute the FNE for. Alternatively these can be passed through
     the stats input parameter.
 
+    This function aims to generate the Full-Network embedding in an illustrative way.
+    We are aware that it is possible to integrate everything in a tensorflow operation,
+    however this is not our current goal.
+
     [1] https://arxiv.org/abs/1705.07706
    
     Args:
@@ -32,8 +36,6 @@ def full_network_embedding(model, image_paths, input_tensor, target_tensors, sta
        2D ndarry: Mean and stddev per feature. Of shape <2,num_feats>
     '''
     # Just in case, we reset the graph.
-    # TODO: Check that this is not problematic. `tf.reset_default_graph` is a global tensorflow call
-    #  that might have serious implications on the code using this function...
     tf.reset_default_graph()
     tf.import_graph_def(model)
 
@@ -60,8 +62,6 @@ def full_network_embedding(model, image_paths, input_tensor, target_tensors, sta
             # TODO: extract by batches for minimal efficiency?
             feature_vals = sess.run(tensorOutputs, feed_dict={x0: np.expand_dims(img, 0)})
             features_current = np.empty((1, 0))
-            # TODO: Since we are already using tensorflow, this must be included as graph operations instead of
-            #  post python computation.
             for feat in feature_vals:
                 # SPATIAL AVERAGE POOLING
                 pooled_vals = np.mean(np.mean(feat, axis=2), axis=1)
