@@ -9,9 +9,14 @@ The code contains an example of use, loading a pre-trained model provided by the
 A straight-forward application of this code is image classification, often through the training of a linear SVM [1]. The FNE is particularly competitive in contexts with little data availability, working with as little as 10 examples per class. The FNE is also robust to dissimilarities between the pre-trained task and the target task, making it apropriate for unsual or highly specific problems.
 It also has demonstrated its superior performance on multimodal embbedding schemes [2].
 
-## Requirements
-* Python 2.7 ???
-* 
+## Requirements?
+* Python 2.7?
+* Numpy 1.16?
+* Tensorflow 1.4?
+* Lucid ???
+* OpenCV ???
+
+## Reference
 
 If you find this code usefull, please reference it as:
 
@@ -24,12 +29,13 @@ author={D. Garcia-Gasulla and A. Vilalta and F. Parés and E. Ayguadé and J. La
 booktitle={2018 IEEE International Conference on Big Knowledge (ICBK)},
 title={An Out-of-the-box Full-Network Embedding for Convolutional Neural Networks},
 year={2018},
-volume={},
-number={},
 pages={168-175},
 keywords={Feature extraction;Training;Computational modeling;Task analysis;Space exploration;Tuning;Transfer Learning, Feature Extraction, Embedding Spaces},
 doi={10.1109/ICBK.2018.00030},
-ISSN={},
 month={Nov},}
 ```
 [2] Vilalta, Armand, et al. "Studying the impact of the Full-Network embedding on multimodal pipelines." Semantic Web Preprint: 1-15.
+
+## License
+GNU General Public License v2.0
+
