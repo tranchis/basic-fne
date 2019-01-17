@@ -7,11 +7,15 @@ The present code is esssentially the "full_network_embedding" method, which extr
 The code contains an example of use, loading a pre-trained model provided by the tensorflow.lucid package.
 
 A straight-forward application of this code is image classification, often through the training of a linear SVM [1]. The FNE is particularly competitive in contexts with little data availability, working with as little as 10 examples per class. The FNE is also robust to dissimilarities between the pre-trained task and the target task, making it apropriate for unsual or highly specific problems.
+It also has demonstrated its superior performance on multimodal embbedding schemes [2].
 
-[1] https://arxiv.org/abs/1705.07706
+## Requirements
+* Python 2.7 ???
+* 
 
 If you find this code usefull, please reference it as:
-D. Garcia-Gasulla et al., "An Out-of-the-box Full-Network Embedding for Convolutional Neural Networks," 2018 IEEE International Conference on Big Knowledge (ICBK), Singapore, 2018, pp. 168-175.
+
+[1] D. Garcia-Gasulla et al., "An Out-of-the-box Full-Network Embedding for Convolutional Neural Networks," 2018 IEEE International Conference on Big Knowledge (ICBK), Singapore, 2018, pp. 168-175.
 doi: 10.1109/ICBK.2018.00030
 
 ```
@@ -28,4 +32,4 @@ doi={10.1109/ICBK.2018.00030},
 ISSN={},
 month={Nov},}
 ```
-
+[2] Vilalta, Armand, et al. "Studying the impact of the Full-Network embedding on multimodal pipelines." Semantic Web Preprint: 1-15.
