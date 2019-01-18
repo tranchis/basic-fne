@@ -8,14 +8,45 @@ All FNE functionalities are coded within the "full_network_embedding" method, wh
 
 A straight-forward application of this code is image classification, often through the training of a linear SVM [1]. The FNE is particularly competitive in contexts with little data availability, working with as little as 10 examples per class. The FNE is also robust to dissimilarities between the pre-trained task and the target task, making it apropriate for unusual or highly specific problems.
 
-## Requirements?
-* Python. Tested in 2.7.12 and 3.5.2. Should work on most versions.
-* Numpy. Tested in 1.14.2. Should work on most versions.
-* Tensorflow. Tested in 1.4.0. Should work on most later versions.
-* Lucid. Needed for the example case only.
-* OpenCV. Tested in 3.2.0.
+![FNE Diagram](fne_diagram.png)
 
-## Reference
+## Usage
+### Prerequisits
+This code can be used either in Python2 or Python3. 
+Required packages are `numpy`, `tensorflow`, `python-opencv`, and `lucid` (only needed for loading example model).
+
+### Example
+In order to run the example case:
+```bash
+python fne.py
+```
+
+### FNE function
+If you want to use FNE implementation:
+```python
+from fne import full_network_embedding
+...
+fne = full_network_embedding(
+    model=_model,
+    image_paths=_image_paths, 
+    batch_size=_batch_size, 
+    input_tensor=_input_tensor, 
+    target_tensors=_target_tensors, 
+    input_reshape=_input_reshape
+)
+```
+_Positional arguments_:
+ - `model` (tf.GraphDef): Serialized TensorFlow protocol buffer (GraphDef) containing the pre-trained model graph from where to extract the FNE. You can get corresponding tf.GraphDef from default Graph using `tf.Graph.as_graph_def`.
+ - `image_paths` (list(str)):  List of images to generate the FNE for.
+ - `batch_size` (int): Number of images to be concurrently computed on the same batch.
+ - `input_tensor` (str): Name of tensor from model where the input is fed to.
+ - `target_tensors` (list(str)): List of tensor names from model to extract features from.
+ - `input_reshape` (tuple): A tuple containing the desired shape (height, width) used to resize the image.
+ 
+_Optional arguments_:
+ - `stats` (2D ndarray): Array of feature-wise means and stddevs for standardization.
+ 
+## References
 
 If you find this code useful, please reference it as:
 
