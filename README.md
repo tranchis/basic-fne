@@ -13,7 +13,7 @@ A straight-forward application of this code is image classification, often throu
 ## Usage
 ### Prerequisits
 This code can be used either in Python2 or Python3. 
-Required packages are `numpy`, `tensorflow`, `python-opencv`, and `lucid` (only needed for loading example model).
+Required packages are `numpy`, `tensorflow`, `opencv-python`, and `lucid` (only needed for loading example model).
 
 ### Example
 In order to run the example case:
